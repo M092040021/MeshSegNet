@@ -6,7 +6,7 @@ from vedo import *
 from scipy.spatial import distance_matrix
 
 class Mesh_Dataset(Dataset):
-    def __init__(self, data_list_path, num_classes=15, patch_size=7000):
+    def __init__(self, data_list_path, num_classes=15, patch_size=6000):
         """
         Args:
             h5_path (string): Path to the txt file with h5 files.
@@ -32,11 +32,11 @@ class Mesh_Dataset(Dataset):
 
         # new way
         # move mesh to origin
-        points = mesh.points()
+        points = mesh.vertices
         mean_cell_centers = mesh.center_of_mass()
         points[:, 0:3] -= mean_cell_centers[0:3]
 
-        ids = np.array(mesh.faces())
+        ids = np.array(mesh.cells)
         cells = points[ids].reshape(mesh.ncells, 9).astype(dtype='float32')
 
         # customized normal calculation; the vtk/vedo build-in function will change number of points
