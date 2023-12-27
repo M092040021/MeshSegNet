@@ -44,7 +44,7 @@ class Mesh_Dataset(Dataset):
         normals = mesh.celldata['Normals']
 
         # move mesh to origin
-        barycenters = mesh.cell_centers() # don't need to copy
+        barycenters = mesh.cell_centers # don't need to copy
         barycenters -= mean_cell_centers[0:3]
 
         #normalized data
