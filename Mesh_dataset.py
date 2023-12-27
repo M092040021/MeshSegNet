@@ -77,8 +77,8 @@ class Mesh_Dataset(Dataset):
         num_positive = len(positive_idx) # number of selected tooth cells
 
 
-        positive_selected_idx = np.random.choice(positive_idx, size=(5/6)*self.patch_size, replace=False)
-        negative_selected_idx = np.random.choice(negative_idx, size=(1/6)*self.patch_size, replace=False)
+        positive_selected_idx = np.random.choice(positive_idx, size=int((5/6)*self.patch_size), replace=False)
+        negative_selected_idx = np.random.choice(negative_idx, size=int((1/6)*self.patch_size), replace=False)
         selected_idx = np.concatenate((positive_selected_idx, negative_selected_idx))
         selected_idx = np.sort(selected_idx, axis=None)
 
