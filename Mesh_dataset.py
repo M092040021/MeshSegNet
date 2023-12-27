@@ -74,20 +74,15 @@ class Mesh_Dataset(Dataset):
         # calculate number of valid cells (tooth instead of gingiva)
         positive_idx = np.argwhere(labels>0)[:, 0] #tooth idx
         negative_idx = np.argwhere(labels==0)[:, 0] # gingiva idx
-
         num_positive = len(positive_idx) # number of selected tooth cells
 
-        if num_positive > self.patch_size: # all positive_idx in this patch
-            positive_selected_idx = np.random.choice(positive_idx, size=self.patch_size, replace=False)
-            selected_idx = positive_selected_idx
-        else:   # patch contains all positive_idx and some negative_idx
-            num_negative = self.patch_size - num_positive # number of selected gingiva cells
-            positive_selected_idx = np.random.choice(positive_idx, size=num_positive, replace=False)
-            negative_selected_idx = np.random.choice(negative_idx, size=num_negative, replace=False)
-            selected_idx = np.concatenate((positive_selected_idx, negative_selected_idx))
 
+        positive_selected_idx = np.random.choice(positive_idx, size=(5/6)*self.patch_size, replace=False)
+        negative_selected_idx = np.random.choice(negative_idx, size=(1/6)*self.patch_size, replace=False)
+        selected_idx = np.concatenate((positive_selected_idx, negative_selected_idx))
         selected_idx = np.sort(selected_idx, axis=None)
 
+        
         X_train[:] = X[selected_idx, :]
         Y_train[:] = Y[selected_idx, :]
 
